@@ -1,5 +1,6 @@
 package com.j.domain.exception;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 /**
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
  *
  * @author Jinx
  */
+@Getter
 public class UnprocessableException extends RuntimeException {
 
     private final int code = HttpStatus.UNPROCESSABLE_ENTITY.value();

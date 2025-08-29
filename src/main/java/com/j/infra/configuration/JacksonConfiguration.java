@@ -1,8 +1,11 @@
 package com.j.infra.configuration;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -12,6 +15,8 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -38,8 +43,16 @@ public class JacksonConfiguration {
                                 .addDeserializer(LocalDate.class, new LocalDateDeserializer(STANDER_DF))
                                 .addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(STANDER_DTF))
                                 .addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(STANDER_DTF))
+                                .addSerializer(Duration.class, new DurationSerializer())
                 )
                 .setSerializationInclusion(JsonInclude.Include.NON_NULL)
                 .setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+    }
+
+    static class DurationSerializer extends JsonSerializer<Duration> {
+        @Override
+        public void serialize(Duration value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+            gen.writeNumber(value.getSeconds());
+        }
     }
 }

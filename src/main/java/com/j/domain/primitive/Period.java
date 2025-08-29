@@ -14,15 +14,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Period {
 
-    private LocalDateTime startTime;
+    private LocalDateTime startAt;
 
-    private LocalDateTime endTime;
+    private LocalDateTime endAt;
 
-    public boolean isBetween(LocalDateTime ldt) {
-        if (ldt == null) {
-            return false;
-        }
-
-        return ldt.isAfter(startTime) && ldt.isBefore(endTime);
+    public boolean isWithin(LocalDateTime time) {
+        return time != null && time.isAfter(startAt) && time.isBefore(endAt);
     }
 }
