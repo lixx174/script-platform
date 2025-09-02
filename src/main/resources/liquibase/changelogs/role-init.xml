@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.15.xsd">
+
+    <changeSet id="role-init" author="jinx">
+        <createTable tableName="tb_role" remarks="角色">
+            <column name="id" type="BIGINT" autoIncrement="true" startWith="1">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)" remarks="名称"/>
+            <column name="remark" type="VARCHAR(255)" remarks="备注"/>
+
+            <column name="create_at" type="DATETIME" remarks="创建时间"/>
+            <column name="create_by" type="VARCHAR(255)" remarks="创建人"/>
+            <column name="modify_at" type="DATETIME" remarks="修改时间"/>
+            <column name="modify_by" type="VARCHAR(255)" remarks="修改人"/>
+            <column name="is_deleted" type="TINYINT(1)" defaultValue="0" remarks="逻辑删除（1 已删除 0 未删除）"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

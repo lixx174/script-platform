@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.15.xsd">
+
+    <changeSet id="user-role-init" author="jinx">
+        <createTable tableName="tb_user_role" remarks="用户角色关联">
+            <column name="user_id" type="BIGINT" remarks="用户id（tb_user）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="BIGINT" remarks="角色id（tb_role）">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!--联合主键-->
+        <addPrimaryKey tableName="tb_user_role" columnNames="user_id, role_id"/>
+    </changeSet>
+
+</databaseChangeLog>

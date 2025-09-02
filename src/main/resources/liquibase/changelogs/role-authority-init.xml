@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.15.xsd">
+
+    <changeSet id="role-authority-init" author="jinx">
+        <createTable tableName="tb_role_authority" remarks="角色权限关联">
+            <column name="role_id" type="BIGINT" remarks="角色id（tb_role）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority_id" type="BIGINT" remarks="权限id（tb_authority）">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!--联合主键-->
+        <addPrimaryKey tableName="tb_role_authority" columnNames="role_id, authority_id"/>
+    </changeSet>
+
+</databaseChangeLog>

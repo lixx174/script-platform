@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.15.xsd">
+
+    <changeSet id="user-init" author="jinx">
+        <createTable tableName="tb_user" remarks="用户">
+            <column name="id" type="BIGINT" autoIncrement="true" startWith="1">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)" remarks="名称"/>
+            <column name="avatar" type="VARCHAR(255)" remarks="头像"/>
+            <column name="sex" type="VARCHAR(255)" remarks="性别（FEMALE 男性  MALE 女性）"/>
+            <column name="status" type="VARCHAR(255)" remarks="状态（ENABLE 正常, DISABLE 关闭, FORBIDDEN 禁用）"/>
+            <column name="is_super_admin" type="TINYINT(1)" remarks="是否超级管理员（1 是 0 否）"/>
+
+            <column name="create_at" type="DATETIME" remarks="创建时间"/>
+            <column name="create_by" type="VARCHAR(255)" remarks="创建人"/>
+            <column name="modify_at" type="DATETIME" remarks="修改时间"/>
+            <column name="modify_by" type="VARCHAR(255)" remarks="修改人"/>
+            <column name="is_deleted" type="TINYINT(1)" defaultValue="0" remarks="逻辑删除（1 已删除 0 未删除）"/>
+        </createTable>
+
+        <!-- add default data -->
+        <insert tableName="tb_user">
+            <column name="name" value="jinx"/>
+            <column name="sex" value="MALE"/>
+            <column name="status" value="ENABLE"/>
+            <column name="is_super_admin" valueBoolean="true"/>
+            <column name="create_at" valueComputed="NOW()"/>
+            <column name="create_by" value="system"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
