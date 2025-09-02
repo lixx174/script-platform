@@ -1,13 +1,13 @@
 package com.j.application.service;
 
 import com.j.application.model.user.UserCreateCommand;
+import com.j.domain.entity.user.Account;
+import com.j.domain.entity.user.User;
 import com.j.domain.exception.UnprocessableException;
 import com.j.domain.repository.AccountRepository;
 import com.j.domain.repository.RoleRepository;
 import com.j.domain.repository.UserRepository;
 import com.j.domain.service.RoleEntityService;
-import com.j.domain.user.Account;
-import com.j.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

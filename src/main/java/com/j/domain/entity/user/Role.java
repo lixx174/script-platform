@@ -1,11 +1,17 @@
-package com.j.domain.user;
+package com.j.domain.entity.user;
 
+import com.j.domain.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.util.StringUtils;
 
@@ -18,10 +24,12 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "tb_role")
-public class Role {
+public class Role extends BaseEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -29,9 +37,18 @@ public class Role {
     private String remark;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tb_role_authority",
+            joinColumns = {
+                    @JoinColumn(name = "role_id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "authority_id")
+            }
+    )
     private Collection<Authority> authorities;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "roles")
     private Collection<User> users;
 
     public Role(String name, String remark) {

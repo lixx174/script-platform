@@ -1,8 +1,8 @@
 package com.j.domain.service;
 
+import com.j.domain.entity.user.Role;
 import com.j.domain.exception.UnprocessableException;
 import com.j.domain.repository.RoleRepository;
-import com.j.domain.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;

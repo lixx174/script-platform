@@ -1,17 +1,18 @@
 package com.j.infra.configuration.filter;
 
+import com.j.domain.entity.token.Token;
 import com.j.domain.repository.TokenRepository;
-import com.j.domain.token.Token;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.AccountExpiredException;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -26,7 +27,6 @@ import static com.j.infra.configuration.security.TokenGenerate.TOKEN_TYPE;
 /**
  * @author Jinx
  */
-@Component
 @RequiredArgsConstructor
 public class TokenFilter extends OncePerRequestFilter {
 
@@ -51,11 +51,11 @@ public class TokenFilter extends OncePerRequestFilter {
                 Optional<Token> token = tokenRepository.findByAccessToken(accessToken);
                 if (token.isPresent()) {
                     if (token.get().isAccessExpired()) {
-                        throw new RuntimeException("to refresh token");
+                        throw new AccountExpiredException("Access token has expired");
                     }
 
                     Authentication authentication = UsernamePasswordAuthenticationToken.authenticated(
-                            token.get(), "", null
+                            token.get().getUser(), "", null
                     );
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                     filterChain.doFilter(request, response);
@@ -63,7 +63,7 @@ public class TokenFilter extends OncePerRequestFilter {
                 }
             }
 
-            throw new RuntimeException("403");
+            throw new AuthenticationCredentialsNotFoundException("AccessToken not found");
         } else {
             filterChain.doFilter(request, response);
         }

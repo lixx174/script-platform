@@ -12,7 +12,10 @@ spring:
 
   jpa:
     show-sql: true
-    generate-ddl: false
+    open-in-view: false
+
+  liquibase:
+    change-log: classpath:/liquibase/changelog-master.xml
 
 logging:
   level:

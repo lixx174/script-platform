@@ -1,5 +1,6 @@
 package com.j.application.model.security;
 
+import com.j.application.model.BaseDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +11,7 @@ import java.time.Duration;
  */
 @Getter
 @Setter
-public class TokenDto {
+public class TokenDto extends BaseDto {
 
     private String type;
 

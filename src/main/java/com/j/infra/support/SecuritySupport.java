@@ -1,6 +1,6 @@
-package com.j.application;
+package com.j.infra.support;
 
-import com.j.domain.user.User;
+import com.j.domain.entity.user.User;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**

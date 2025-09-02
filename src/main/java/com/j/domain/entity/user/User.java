@@ -1,11 +1,17 @@
-package com.j.domain.user;
+package com.j.domain.entity.user;
 
+import com.j.domain.entity.BaseEntity;
 import com.j.domain.primitive.Status;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -27,9 +33,10 @@ import java.util.stream.Collectors;
 @Entity
 @NoArgsConstructor
 @Table(name = "tb_user")
-public class User implements UserDetails {
+public class User extends BaseEntity implements UserDetails {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -37,12 +44,22 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Column(name = "is_super_admin")
     private Boolean superAdmin;
 
     @OneToOne(mappedBy = "user")
     private Account account;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tb_user_role",
+            joinColumns = {
+                    @JoinColumn(name = "user_id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "role_id")
+            }
+    )
     private Collection<Role> roles;
 
     public User(String name, Account account, Collection<Role> roles) {
@@ -58,6 +75,11 @@ public class User implements UserDetails {
                 .flatMap(Collection::stream)
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public String toString() {
+        return id + "-" + name;
     }
 
     @Override

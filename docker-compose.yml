@@ -8,6 +8,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: script_platform
+      TZ: Asia/Shanghai
     ports:
       - "3306:3306"
     volumes:

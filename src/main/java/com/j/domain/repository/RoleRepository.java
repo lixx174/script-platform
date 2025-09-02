@@ -1,6 +1,6 @@
 package com.j.domain.repository;
 
-import com.j.domain.user.Role;
+import com.j.domain.entity.user.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
