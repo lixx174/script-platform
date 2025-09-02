@@ -1,0 +1,13 @@
+### create
+POST {{endpoint}}/user/create
+Authorization: {{accessToken}}
+Content-Type: application/json
+
+{
+  "name": "super_jinx",
+  "username": "88888888",
+  "password": "88888888",
+  "roleIds": [
+    1
+  ]
+}

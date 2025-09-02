@@ -1,0 +1,14 @@
+### page
+GET {{endpoint}}/role/page
+Authorization: {{accessToken}}
+
+
+### create
+POST {{endpoint}}/role/create
+Authorization: {{accessToken}}
+Content-Type: application/json
+
+{
+  "name": "资本家3",
+  "remark": "the very important person in the platform"
+}

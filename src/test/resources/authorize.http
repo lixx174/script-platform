@@ -1,0 +1,21 @@
+### ping
+GET {{endpoint}}/ping
+
+### 登录
+POST {{endpoint}}/login
+Content-Type: application/x-www-form-urlencoded
+
+username = {{username}} &
+password = {{password}}
+
+> {%
+    // response.body.data see: com.j.application.model.security.TokenDto
+    client.global.set("accessToken", response.body.data.type + " " + response.body.data.accessToken);
+    client.global.set("refreshToken", response.body.data.refreshToken);
+%}
+
+### refresh
+POST {{endpoint}}/token/refresh
+Content-Type: application/x-www-form-urlencoded
+
+refreshToken = {{refreshToken}}
