@@ -7,9 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -34,10 +31,6 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Table(name = "tb_user")
 public class User extends BaseEntity implements UserDetails {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     private String name;
 
@@ -79,7 +72,7 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     public String toString() {
-        return id + "-" + name;
+        return getId() + "-" + name;
     }
 
     @Override

@@ -3,9 +3,6 @@ package com.j.domain.entity.token;
 import com.j.domain.entity.BaseEntity;
 import com.j.domain.entity.user.User;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -21,10 +18,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "tb_token")
 public class Token extends BaseEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     private String type;
 
