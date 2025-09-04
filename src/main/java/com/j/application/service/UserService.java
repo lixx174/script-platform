@@ -6,7 +6,6 @@ import com.j.domain.entity.user.Role;
 import com.j.domain.entity.user.User;
 import com.j.domain.exception.UnprocessableException;
 import com.j.domain.repository.AccountRepository;
-import com.j.domain.repository.RoleRepository;
 import com.j.domain.repository.UserRepository;
 import com.j.domain.service.RoleEntityService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +22,6 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
     private final AccountRepository accountRepository;
     private final RoleEntityService roleEntityService;
 

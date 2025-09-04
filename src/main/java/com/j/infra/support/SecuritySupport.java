@@ -9,10 +9,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public class SecuritySupport {
 
-    public static Long getUserId() {
-        return getUser().getId();
-    }
-
     public static User getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication == null ? null : (User) authentication.getPrincipal();
