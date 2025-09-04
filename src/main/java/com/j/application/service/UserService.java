@@ -2,6 +2,7 @@ package com.j.application.service;
 
 import com.j.application.model.user.UserCreateCommand;
 import com.j.domain.entity.user.Account;
+import com.j.domain.entity.user.Role;
 import com.j.domain.entity.user.User;
 import com.j.domain.exception.UnprocessableException;
 import com.j.domain.repository.AccountRepository;
@@ -10,6 +11,9 @@ import com.j.domain.repository.UserRepository;
 import com.j.domain.service.RoleEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.Optional;
 
 /**
  * @author Jinx
@@ -24,19 +28,21 @@ public class UserService {
     private final RoleEntityService roleEntityService;
 
     public void create(UserCreateCommand command) {
-        if (accountRepository.findByUsername(command.getUsername()).isPresent()) {
+        // TODO 跨领域
+        Optional<Account> accountOptional = accountRepository.findByUsername(command.getUsername());
+        if (accountOptional.isPresent()) {
             throw new UnprocessableException("Account：{%s} already existed".formatted(command.getUsername()));
         }
-        if (userRepository.findByName(command.getName()).isPresent()) {
+        Optional<User> userOptional = userRepository.findByName(command.getName());
+        if (userOptional.isPresent()) {
             throw new UnprocessableException("User：{%s} already existed".formatted(command.getName()));
         }
 
-        User user = new User(
-                command.getName(),
-                new Account(command.getUsername(), command.getPassword()),
-                roleEntityService.retrieveRoles(command.getRoleIds())
-        );
+        Account account = new Account(command.getUsername(), command.getPassword());
+        Collection<Role> roles = roleEntityService.retrieveRoles(command.getRoleIds());
 
-        userRepository.save(user);
+        User entity = new User(command.getName(), account, roles);
+
+        userRepository.save(entity);
     }
 }

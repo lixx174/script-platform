@@ -31,13 +31,13 @@ public class RoleService {
     }
 
     public void create(RoleCreateCommand command) {
-        Optional<Role> role = roleRepository.findByName(command.getName());
-        if (role.isPresent()) {
+        Optional<Role> roleOptional = roleRepository.findByName(command.getName());
+        if (roleOptional.isPresent()) {
             throw new UnprocessableException("Role：{%s} already existed".formatted(command.getName()));
         }
 
-        roleRepository.save(
-                new Role(command.getName(), command.getRemark())
-        );
+        Role role = new Role(command.getName(), command.getRemark());
+
+        roleRepository.save(role);
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 
 /**
  * 分页请求基础模型
@@ -54,6 +55,10 @@ public class PageQuery {
      * @return 查询条件
      */
     public Example<?> getExample() {
+        throw new UnsupportedOperationException("The method needs to be implemented if there are query conditions.");
+    }
+
+    public Specification<?> getSpecification() {
         throw new UnsupportedOperationException("The method needs to be implemented if there are query conditions.");
     }
 }

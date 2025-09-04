@@ -14,7 +14,7 @@
             <column name="name" type="VARCHAR(255)" remarks="名称"/>
             <column name="type" type="VARCHAR(255)" remarks="权限类型（ROUTE 路由 BUTTON 按钮）"/>
             <column name="path" type="VARCHAR(255)" remarks="路由路径"/>
-            <column name="permission" type="VARCHAR(255)" remarks="按钮权限"/>
+            <column name="permission" type="VARCHAR(255)" remarks="权限标识"/>
             <column name="sort" type="INT" remarks="排序号"/>
 
             <column name="create_at" type="DATETIME" remarks="创建时间"/>
