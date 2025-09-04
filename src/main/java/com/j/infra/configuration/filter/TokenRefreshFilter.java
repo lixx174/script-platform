@@ -19,7 +19,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import static com.j.infra.support.ManualResponseSupport.doJsonResponse;
 
@@ -44,24 +43,22 @@ public class TokenRefreshFilter extends OncePerRequestFilter {
         if (matcher.match(PATTERN, request.getRequestURI())) {
             String refreshToken = request.getParameter(REFRESH_TOKEN_PARAMETER);
             if (StringUtils.hasText(refreshToken)) {
-                Optional<Token> token = tokenRepository.findByRefreshToken(refreshToken);
-                if (token.isPresent()) {
-                    if (token.get().isRefreshExpired()) {
-                        throw new AccountExpiredException("Refresh token has expired");
-                    }
+                Token token = tokenRepository.findByRefreshToken(refreshToken)
+                        .map(t -> {
+                            if (t.isRefreshExpired()) {
+                                throw new AccountExpiredException("Refresh token has expired");
+                            }
 
-                    token.get().replace(
-                            tokenGenerate.generate(token.get().getUser())
-                    );
-                    tokenRepository.save(token.get());
+                            Token newToken = tokenGenerate.generate(t.getUser());
+                            return t.replace(newToken);
+                        })
+                        .orElseThrow(() -> new InvalidBearerTokenException("Invalid refresh token"));
 
-                    TokenDto dto = tokenConverter.assemble(token.get());
-                    doJsonResponse(response, () -> Result.succeed(dto));
-                    return;
-                }
+                tokenRepository.save(token);
+
+                TokenDto dto = tokenConverter.assemble(token);
+                doJsonResponse(response, () -> Result.succeed(dto));
             }
-
-            throw new InvalidBearerTokenException("Invalid refresh token");
         } else {
             filterChain.doFilter(request, response);
         }

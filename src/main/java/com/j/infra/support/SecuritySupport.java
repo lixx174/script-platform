@@ -1,6 +1,7 @@
 package com.j.infra.support;
 
 import com.j.domain.entity.user.User;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
@@ -13,6 +14,7 @@ public class SecuritySupport {
     }
 
     public static User getUser() {
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication == null ? null : (User) authentication.getPrincipal();
     }
 }

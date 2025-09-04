@@ -45,10 +45,12 @@ public class Token extends BaseEntity {
      *
      * @param newToken 新token
      */
-    public void replace(Token newToken) {
+    public Token replace(Token newToken) {
         this.accessToken = newToken.getAccessToken();
         this.refreshToken = newToken.getRefreshToken();
         this.accessExpireAt = newToken.getAccessExpireAt();
         this.refreshExpireAt = newToken.getRefreshExpireAt();
+
+        return this;
     }
 }

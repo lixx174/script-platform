@@ -15,8 +15,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import java.util.Optional;
-
 import static com.j.infra.support.ManualResponseSupport.doJsonResponse;
 
 /**
@@ -41,13 +39,19 @@ public class AuthenticationPostHandler implements AuthenticationSuccessHandler, 
                                         HttpServletResponse response,
                                         Authentication authentication) {
         if (authentication.getPrincipal() instanceof User user) {
-            Optional<Token> token = tokenRepository.findByUserId(user.getId());
-            if (token.isEmpty() || token.get().isAccessExpired()) {
-                token = Optional.of(tokenGenerate.generate(authentication));
-                tokenRepository.save(token.get());
-            }
+            Token token = tokenRepository.findByUserId(user.getId())
+                    .map(t -> {
+                        if (t.isAccessExpired()) {
+                            Token newToken = tokenGenerate.generate(authentication);
+                            t.replace(newToken);
+                        }
+                        return t;
+                    })
+                    .orElseGet(() -> tokenGenerate.generate(authentication));
 
-            TokenDto dto = tokenConverter.assemble(token.get());
+            tokenRepository.save(token);
+
+            TokenDto dto = tokenConverter.assemble(token);
             doJsonResponse(response, () -> Result.succeed(dto));
         } else {
             throw new AuthenticationServiceException("Illegal principal");

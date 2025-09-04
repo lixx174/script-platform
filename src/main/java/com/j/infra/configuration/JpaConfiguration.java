@@ -20,7 +20,7 @@ public class JpaConfiguration {
     public AuditorAware<String> auditorProvider() {
         return () -> {
             User user = SecuritySupport.getUser();
-            return Optional.of(user.getId() + "-" + user.getName());
+            return Optional.of(user == null ? "anonymous" : user.getId() + "-" + user.getName());
         };
     }
 }

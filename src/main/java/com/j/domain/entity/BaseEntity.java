@@ -21,5 +21,5 @@ public abstract class BaseEntity extends AuditEntity {
     private Long id;
 
     @Column(name = "is_deleted")
-    private Boolean deleted;
+    private Boolean deleted = false;
 }
