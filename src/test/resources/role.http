@@ -9,6 +9,6 @@ Authorization: {{accessToken}}
 Content-Type: application/json
 
 {
-  "name": "资本家3",
+  "name": "资本家4",
   "remark": "the very important person in the platform"
 }

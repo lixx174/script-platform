@@ -1,0 +1,18 @@
+### page
+GET {{endpoint}}/authority/page
+Authorization: {{accessToken}}
+
+
+### create
+POST {{endpoint}}/authority/create
+Authorization: {{accessToken}}
+Content-Type: application/json
+
+{
+  "pid": 81,
+  "name": "用户管理",
+  "type": "ROUTE",
+  "path": "/manage/user",
+  "permission": "{{$random.uuid}}",
+  "sort": 1
+}

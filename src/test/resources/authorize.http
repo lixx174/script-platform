@@ -9,7 +9,7 @@ username = {{username}} &
 password = {{password}}
 
 > {%
-    // response.body.data see: com.j.application.model.security.TokenDto
+    // response.body.data -> see: com.j.application.model.security.TokenDto
     client.global.set("accessToken", response.body.data.type + " " + response.body.data.accessToken);
     client.global.set("refreshToken", response.body.data.refreshToken);
 %}
@@ -19,3 +19,9 @@ POST {{endpoint}}/token/refresh
 Content-Type: application/x-www-form-urlencoded
 
 refreshToken = {{refreshToken}}
+
+> {%
+    // refresh environment
+    client.global.set("accessToken", response.body.data.type + " " + response.body.data.accessToken);
+    client.global.set("refreshToken", response.body.data.refreshToken);
+%}
