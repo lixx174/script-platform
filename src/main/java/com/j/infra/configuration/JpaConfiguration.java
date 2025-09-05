@@ -1,7 +1,7 @@
 package com.j.infra.configuration;
 
+import com.j.application.UserContext;
 import com.j.domain.entity.user.User;
-import com.j.infra.support.SecuritySupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -19,7 +19,7 @@ public class JpaConfiguration {
     @Bean
     public AuditorAware<String> auditorProvider() {
         return () -> {
-            User user = SecuritySupport.getUser();
+            User user = UserContext.getUser();
             return Optional.of(user == null ? "anonymous" : user.getId() + "-" + user.getName());
         };
     }

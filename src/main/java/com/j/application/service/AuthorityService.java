@@ -29,7 +29,7 @@ public class AuthorityService {
     public PageReply<AuthorityDto> page(AuthorityPageQuery query) {
         Page<Authority> page = authorityRepository.findAll(query.getSpecification(), query.getPage());
 
-        return PageReply.of(page, authorityConverter::assemble);
+        return PageReply.of(page, authorityConverter::convert);
     }
 
     public void create(AuthorityCreateCommand command) {

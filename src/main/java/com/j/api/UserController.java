@@ -2,9 +2,11 @@ package com.j.api;
 
 import com.j.application.model.Result;
 import com.j.application.model.user.UserCreateCommand;
+import com.j.application.model.user.UserProfileDto;
 import com.j.application.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,5 +25,11 @@ public class UserController {
     @PostMapping("/create")
     public Result<Void> create(@Valid @RequestBody UserCreateCommand command) {
         return Result.succeed(() -> service.create(command));
+    }
+
+
+    @GetMapping("/profile")
+    public Result<UserProfileDto> profile() {
+        return Result.succeed(service.profile());
     }
 }

@@ -12,7 +12,7 @@ import java.util.Collection;
 @Mapper
 public interface RoleConverter {
 
-    RoleDto assemble(Role role);
+    RoleDto convert(Role role);
 
-    Collection<RoleDto> assemble(Collection<Role> roles);
+    Collection<RoleDto> convert(Collection<Role> roles);
 }

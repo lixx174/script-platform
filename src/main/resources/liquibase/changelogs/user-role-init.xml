@@ -17,6 +17,12 @@
 
         <!--联合主键-->
         <addPrimaryKey tableName="tb_user_role" columnNames="user_id, role_id"/>
+
+        <!-- add default data -->
+        <insert tableName="tb_user_role">
+            <column name="user_id" valueNumeric="1"/>
+            <column name="role_id" valueNumeric="1"/>
+        </insert>
     </changeSet>
 
 </databaseChangeLog>

@@ -19,6 +19,15 @@
             <column name="modify_by" type="VARCHAR(255)" remarks="修改人"/>
             <column name="is_deleted" type="TINYINT(1)" defaultValue="0" remarks="逻辑删除（1 已删除 0 未删除）"/>
         </createTable>
+
+        <!-- add default data -->
+        <insert tableName="tb_role">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="超级管理员"/>
+            <column name="remark" value="所有权限"/>
+            <column name="create_at" valueComputed="NOW()"/>
+            <column name="create_by" value="system"/>
+        </insert>
     </changeSet>
 
 </databaseChangeLog>

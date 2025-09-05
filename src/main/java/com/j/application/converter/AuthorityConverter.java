@@ -20,7 +20,7 @@ public interface AuthorityConverter {
             @Mapping(target = "modifyAt", ignore = true),
             @Mapping(target = "modifyBy", ignore = true),
     })
-    AuthorityDto assemble(Authority authority);
+    AuthorityDto convert(Authority authority);
 
-    Collection<AuthorityDto> assemble(Collection<Authority> authorities);
+    Collection<AuthorityDto> convert(Collection<Authority> authorities);
 }

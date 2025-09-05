@@ -20,7 +20,7 @@ public interface TokenConverter {
             @Mapping(target = "accessExpireIn", source = "accessExpireAt", qualifiedByName = "instantToDuration"),
             @Mapping(target = "refreshExpireIn", source = "refreshExpireAt", qualifiedByName = "instantToDuration"),
     })
-    TokenDto assemble(Token token);
+    TokenDto convert(Token token);
 
     @Named("instantToDuration")
     default Duration instantToDuration(LocalDateTime expireAt) {

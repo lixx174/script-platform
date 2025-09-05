@@ -51,7 +51,7 @@ public class AuthenticationPostHandler implements AuthenticationSuccessHandler, 
 
             tokenRepository.save(token);
 
-            TokenDto dto = tokenConverter.assemble(token);
+            TokenDto dto = tokenConverter.convert(token);
             doJsonResponse(response, () -> Result.succeed(dto));
         } else {
             throw new AuthenticationServiceException("Illegal principal");

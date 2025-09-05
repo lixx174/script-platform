@@ -27,7 +27,7 @@ public class RoleService {
     public PageReply<RoleDto> page(RolePageQuery query) {
         Page<Role> page = roleRepository.findAll(query.getExample(), query.getPage());
 
-        return PageReply.of(page, roleConverter::assemble);
+        return PageReply.of(page, roleConverter::convert);
     }
 
     public void create(RoleCreateCommand command) {
